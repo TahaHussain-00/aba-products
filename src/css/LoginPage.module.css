@@ -1,0 +1,303 @@
+/* Global reset to prevent interference */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6; 
+    width: 100%;
+  }
+  
+  /* Container styling */
+  .container {
+    width: 500px;
+   
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+    position: relative;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+  }
+  
+  /* Hide scrollbar for Webkit browsers */
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Title styling */
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Form styling */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 1rem;
+  }
+  
+  /* Form group styling */
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label styling */
+  .label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 6px;
+    margin-left: 3px;
+  }
+  
+  /* Input styling */
+  .input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Focus state for inputs */
+  .input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 8px rgba(79, 70, 229, 0.2);
+  }
+  
+  /* Submit button styling */
+  .submitButton {
+    background-color: #4f46e5;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .submitButton:hover {
+    background-color: #4338ca;
+  }
+  
+  .submitButton:active {
+    background-color: #3730a3;
+  }
+  
+  .submitButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+  }
+  
+  /* Required field indicator */
+  .asteric {
+    color: #ff0000;
+    font-size: 16px;
+  }
+  
+  /* Forgot password link */
+  .forgotPassword {
+    background: none;
+    border: none;
+    color: #4f46e5;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .forgotPassword:hover {
+    color: #4338ca;
+  }
+  
+  /* Popup styles */
+  .popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .popup {
+    background-color: white;
+    padding: 24px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    animation: slideUp 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+  }
+  
+  .popupCheckmark {
+    width: 50px;
+    height: 50px;
+    background-color: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 16px;
+  }
+  
+  .popupText {
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .popupButton {
+    background-color: #4f46e5;
+    color: #ffffff;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .popupButton:hover {
+    background-color: #4338ca;
+  }
+  
+  .popupButton:active {
+    background-color: #3730a3;
+  }
+  .errorMessage {
+    color: red;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  
+  .popupText {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (min-width: 768px) {
+    .container {
+      max-width: 500px;
+      padding: 2.5rem;
+      
+    }
+  
+    .title {
+      font-size: 26px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      width: 100%;
+      padding: 1.5rem;
+    
+    }
+  
+    .title {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+  
+    .input {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .submitButton {
+      padding: 10px;
+      font-size: 14px;
+    }
+  
+    .label {
+      font-size: 12px;
+    }
+  
+    .form {
+      gap: 12px;
+    }
+  
+    .popup {
+      padding: 20px 30px;
+      width: 90%;
+      max-width: 400px;
+    }
+  
+    .popupCheckmark {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+  
+    .popupText {
+      font-size: 16px;
+    }
+  
+    .popupButton {
+      padding: 6px 20px;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+  
+    .forgotPassword {
+      font-size: 12px;
+    }
+  }
