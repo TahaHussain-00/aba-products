@@ -11,6 +11,8 @@ import ValidatePage from "./pages/ValidatePage";
 import ThankYouPage from "./pages/ThankYouPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/CustomerHomePage";
+import AppointmentPage from "./pages/AppointmentPage";
+import MyProfilePage from "./pages/MyProfilePage";
 
 const App = () => {
   return (
@@ -21,7 +23,8 @@ const App = () => {
         <Route path="/register" element={<RegistrationForm />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />}/>
+        <Route path="/appointment" element={<AppointmentPage />}/>
+        <Route path="/profile" element={<MyProfilePage />}/>
       </Routes>
     </Router>
   );

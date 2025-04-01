@@ -51,7 +51,7 @@ const LoginPage = () => {
 
   const closePopup = () => {
     setShowPopup(false);
-    navigate('/home' ,{state: { email }});
+    navigate('/appointment' ,{state: { email }});
   };
 
   const handleForgotPassword = () => {
