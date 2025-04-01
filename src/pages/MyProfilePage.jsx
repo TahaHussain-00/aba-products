@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import styles from "../css/CustomerHomePage.module.css";
 
 function MyProfilePage() {
     const [isOpen, setIsOpen] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const sidebarRef = useRef(null);
+    const hamburgerRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
     const [cityOptions, setCityOptions] = useState([]);
@@ -16,11 +17,19 @@ function MyProfilePage() {
     const email = location.state?.email || ""; 
     console.log("mai phele aaya hu", email)
   
-    const toggleMenu = () => setIsOpen((prevIsOpen) => !prevIsOpen);
+    const toggleMenu = () => {
+      setIsOpen((prevIsOpen) => !prevIsOpen);
+    };  
   
     useEffect(() => {
       const handleClickOutside = (event) => {
-        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        // Check if click is outside sidebar and hamburger button
+        if (
+          sidebarRef.current &&
+          !sidebarRef.current.contains(event.target) &&
+          hamburgerRef.current &&
+          !hamburgerRef.current.contains(event.target)
+        ) {
           setIsOpen(false);
         }
       };
@@ -269,14 +278,25 @@ function MyProfilePage() {
         alert("Unexpected error occurred.");
       }
     };
+    const handleLogout = () => {
+      // Add your logout logic here
+      console.log("Logging out...");
+      navigate("/login");
+    };
     
   
 
   return (
     <div className={styles.container}>
       {/* Hamburger Icon */}
-      <div className={styles.hamburger} onClick={toggleMenu}>
-        <FontAwesomeIcon icon={faBars} />
+      <div className={styles.navbar} ref={hamburgerRef}>
+        <div className={styles.hamburger} onClick={toggleMenu}>
+          <FontAwesomeIcon icon={faBars} />
+        </div>
+        {/* <h2 className={styles.title}>QuickAppFlow</h2> */}
+        <button className={styles.logoutButton} onClick={handleLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+        </button>
       </div>
 
       {/* Sidebar */}
@@ -284,9 +304,9 @@ function MyProfilePage() {
         ref={sidebarRef}
         className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}
       >
-        <button className={styles.closeButton} onClick={toggleMenu}>
+        {/* <button className={styles.closeButton} onClick={toggleMenu}>
           <FontAwesomeIcon icon={faTimes} />
-        </button>
+        </button> */}
         <nav className={styles.nav}>
           <button
             className={styles.navItem}
