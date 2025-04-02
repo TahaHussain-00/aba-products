@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import styles from "../css/CustomerHomePage.module.css";
+import styles from "../css/MyProfilePage.module.css";
 
 function MyProfilePage() {
     const [isOpen, setIsOpen] = useState(false);

@@ -26,16 +26,26 @@ html, body {
   font-family: Arial, sans-serif;
   overflow-y: auto; /* Enable vertical scrolling */
   position: relative;
-
-  /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer and Edge */
 }
-
-/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
 .container::-webkit-scrollbar {
-  display: none;
+  width: 4px; /* Width of the scrollbar */
 }
+
+.container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the track */
+  border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar handle */
+  border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Handle color on hover */
+}
+
+
 
 /* Title styling */
 .title {
