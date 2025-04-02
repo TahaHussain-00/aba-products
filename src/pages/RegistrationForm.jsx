@@ -3,18 +3,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../css/RegistrationForm.module.css";
 const RegistrationForm = () => {
   const location = useLocation();
-  const userEmail = location.state?.email || "";  // Get email from navigation state
- 
-  
+  const userEmail = location.state?.email || ""; // Get email from navigation state
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    email: userEmail,  // Initialize email with the value from EmailPage
+    email: userEmail, // Initialize email with the value from EmailPage
     contactNumber: "",
     gender: "",
     city: "",
   });
-  
+
   const navigate = useNavigate();
   const [cityOptions, setCityOptions] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -25,18 +24,20 @@ const RegistrationForm = () => {
       const birthDate = new Date(dob);
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
-  
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
         age--;
       }
-  
+
       setFormData((prevData) => ({
         ...prevData,
         age: age.toString(),
       }));
     }
   };
-  
 
   useEffect(() => {
     let isMounted = true;
@@ -87,14 +88,35 @@ const RegistrationForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if(name === "dob"){
-      calculateAge(value)
+    if (name === "dob") {
+      calculateAge(value);
     }
   };
 
   //  Handle form submission
+  
+
+  // Add this new function to handle OK button click
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    const firstName = localStorage.getItem("submittedFirstName");
+    navigate("/thankyou", { state: { firstName: firstName } });
+    localStorage.removeItem("submittedFirstName");
+  };
+
+  const validatePasswords = () => {
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return false;
+    }
+    return true;
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if(!validatePasswords()){
+      return;
+    }
 
     const selectedCity = formData.city;
     console.log("Selected city:", selectedCity);
@@ -119,7 +141,7 @@ const RegistrationForm = () => {
         console.log("Form submitted successfully:", xhr.responseText);
         const submittedFirstName = formData.firstName;
         setShowPopup(true);
-        
+
         setFormData({
           firstName: "",
           lastName: "",
@@ -130,9 +152,11 @@ const RegistrationForm = () => {
           age: "",
           city: "",
         });
-        
-        localStorage.setItem('submittedFirstName', submittedFirstName);
+
+        localStorage.setItem("submittedFirstName", submittedFirstName);
       }
+
+      
     };
 
     //  Prepare payload
@@ -148,8 +172,8 @@ const RegistrationForm = () => {
         { fieldID: "ContactNumber", fieldValue: formData.contactNumber },
         { fieldID: "Gender", fieldValue: formData.gender },
         { fieldID: "City", fieldValue: `${city.id};#${city.name}` },
-        { fieldID: "DateofBirth", fieldValue:formData.dob},
-        { fieldId: "Age", fieldValue:formData.age}
+        { fieldID: "DateofBirth", fieldValue: formData.dob },
+        { fieldId: "Age", fieldValue: formData.age },
       ],
       recordFieldValuesChild: [],
       recordID: "",
@@ -158,23 +182,16 @@ const RegistrationForm = () => {
     xhr.send(payload);
   };
 
-  // Add this new function to handle OK button click
-  const handlePopupClose = () => {
-    setShowPopup(false);
-    const firstName = localStorage.getItem('submittedFirstName');
-    navigate("/thankyou", { state: { firstName: firstName } });
-    localStorage.removeItem('submittedFirstName');
-  };
-
   return (
-   
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <h2 className={styles.title}>Customer Registration</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           {/* First Name */}
           <div className={styles.formGroup}>
-            <label className={styles.label}>First Name<span className={styles.asteric}> *</span></label>
+            <label className={styles.label}>
+              First Name<span className={styles.asteric}> *</span>
+            </label>
             <input
               type="text"
               name="firstName"
@@ -186,7 +203,9 @@ const RegistrationForm = () => {
             />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Last Name<span className={styles.asteric}> *</span></label>
+            <label className={styles.label}>
+              Last Name<span className={styles.asteric}> *</span>
+            </label>
             <input
               type="text"
               name="lastName"
@@ -204,11 +223,41 @@ const RegistrationForm = () => {
               name="email"
               value={formData.email}
               className={`${styles.input} ${styles.readOnlyInput}`}
-              readOnly  // Make the field readonly
+              readOnly // Make the field readonly
             />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Contact Number<span className={styles.asteric}> *</span></label>
+            <label className={styles.label}>
+              Password<span className={styles.asteric}> *</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className={styles.input}
+              placeholder="Enter your password"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Confirm Password<span className={styles.asteric}> *</span>
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className={styles.input}
+              placeholder="Confirm your password"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Contact Number<span className={styles.asteric}> *</span>
+            </label>
             <input
               type="text"
               name="contactNumber"
@@ -220,7 +269,9 @@ const RegistrationForm = () => {
             />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Gender<span className={styles.asteric}> *</span></label>
+            <label className={styles.label}>
+              Gender<span className={styles.asteric}> *</span>
+            </label>
             <select
               name="gender"
               value={formData.gender}
@@ -236,7 +287,9 @@ const RegistrationForm = () => {
             </select>
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Date of Birth<span className={styles.asteric}> *</span></label>
+            <label className={styles.label}>
+              Date of Birth<span className={styles.asteric}> *</span>
+            </label>
             <input
               type="date"
               name="dob"
@@ -259,7 +312,9 @@ const RegistrationForm = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>City<span className={styles.asteric}> *</span></label>
+            <label className={styles.label}>
+              City<span className={styles.asteric}> *</span>
+            </label>
             <select
               name="city"
               value={formData.city}
@@ -287,10 +342,7 @@ const RegistrationForm = () => {
           <div className={styles.popup}>
             <div className={styles.popupCheckmark}>✓</div>
             <p className={styles.popupText}>Registration Successful!</p>
-            <button 
-              className={styles.popupButton}
-              onClick={handlePopupClose}
-            >
+            <button className={styles.popupButton} onClick={handlePopupClose}>
               OK
             </button>
           </div>

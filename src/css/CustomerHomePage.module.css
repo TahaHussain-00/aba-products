@@ -1,5 +1,5 @@
 html, body {
-  overflow-x: hidden;
+  
   overflow-y: auto;
   height: 100%;
   font-family: Arial, sans-serif;
@@ -111,22 +111,11 @@ html, body {
   background-color: #1abc9c;
 }
 
-/* -------- Main Content -------- */
-/* .mainContent {
-  flex-grow: 1;
-  padding: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100vh;
-  margin-left: 0;
-  transition: margin-left 0.3s ease;
-} */
 
-.sidebar.open + .mainContent {
-  margin-left: 250px; /* Adjust when sidebar opens */
-}
+/* 
+.sidebar.open {
+  margin-left: 250px; 
+} */
 
 /* -------- Profile Form Styling -------- */
 .formContainer {
@@ -137,8 +126,32 @@ html, body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   box-sizing: border-box;
-  margin-top: 30%; /* Adjust for fixed navbar */
+  margin-top: 90px; 
+  height: 600px;
+  max-height: 70%;
+  margin-bottom: 50px;
+  overflow-y: auto;
+
 }
+.formContainer::-webkit-scrollbar {
+  width: 3px;
+  
+}
+
+.formContainer::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track background color */
+  border-radius: 10px;
+}
+
+.formContainer::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar handle color */
+  border-radius: 10px;
+}
+
+.formContainer::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Handle color on hover */
+}
+
 
 h2 {
   text-align: center;
