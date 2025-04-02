@@ -93,3 +93,20 @@ body, html {
     margin-top: 10px;
   
   }
+
+  .alreadyCustomerButton {
+    display: block;
+    text-align: center;
+    color: #0000ff;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  
+  /* .alreadyCustomerButton:hover {
+    background-color: #218838;
+  } */
+  
+
+  

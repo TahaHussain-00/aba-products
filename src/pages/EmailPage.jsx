@@ -36,7 +36,7 @@ function LoginPage() {
       } else if (data.RType === 1) {
         navigate("/validate", { state: { email } });
       } else {
-        alert("unxpected error from server");
+        alert("Unexpected error from server");
       }
     } catch (error) {
       console.error("Failed to send OTP:", error);
@@ -49,7 +49,6 @@ function LoginPage() {
       <h1 className={styles.title}>Welcome to ABA Products</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-        
           <label htmlFor="email" className={styles.label}>
             Email
           </label>
@@ -68,6 +67,9 @@ function LoginPage() {
           Continue
         </button>
       </form>
+      <a href="/login" className={styles.alreadyCustomerButton}>
+        Already a Customer ?
+      </a>
     </div>
   );
 }
