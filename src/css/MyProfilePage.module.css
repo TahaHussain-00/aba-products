@@ -41,7 +41,7 @@ html, body {
   
   .title {
     flex-grow: 1;
-    text-align: center;
+    /* text-align: center; */
     font-size: 20px;
     font-weight: bold;
   }
@@ -154,7 +154,7 @@ html, body {
   
   
   h2 {
-    text-align: center;
+    /* text-align: center; */
     margin-bottom: 1.5rem;
   }
   

@@ -293,7 +293,7 @@ function MyProfilePage() {
         <div className={styles.hamburger} onClick={toggleMenu}>
           <FontAwesomeIcon icon={faBars} />
         </div>
-        {/* <h2 className={styles.title}>QuickAppFlow</h2> */}
+        <h2 className={styles.title}>Aba-Products</h2>
         <button className={styles.logoutButton} onClick={handleLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} /> Logout
         </button>
