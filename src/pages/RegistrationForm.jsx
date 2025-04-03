@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../css/RegistrationForm.module.css";
+
 const RegistrationForm = () => {
   const location = useLocation();
   const userEmail = location.state?.email || ""; // Get email from navigation state
@@ -12,6 +13,8 @@ const RegistrationForm = () => {
     contactNumber: "",
     gender: "",
     city: "",
+    dob:"",
+    age:"",
   });
 
   const navigate = useNavigate();
@@ -93,7 +96,7 @@ const RegistrationForm = () => {
     }
   };
 
-  //  Handle form submission
+ 
   
 
   // Add this new function to handle OK button click
@@ -104,20 +107,10 @@ const RegistrationForm = () => {
     localStorage.removeItem("submittedFirstName");
   };
 
-  const validatePasswords = () => {
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return false;
-    }
-    return true;
-  };
+
+   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if(!validatePasswords()){
-      return;
-    }
-
     const selectedCity = formData.city;
     console.log("Selected city:", selectedCity);
     console.log("City options:", cityOptions);
@@ -132,34 +125,47 @@ const RegistrationForm = () => {
       return;
     }
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://ndem.quickappflow.com/api/SaveRecord", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
+    let isFirstAPISuccessful = false;
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log("Form submitted successfully:", xhr.responseText);
+    const xhr1 = new XMLHttpRequest();
+    const xhr2 = new XMLHttpRequest();
+    xhr1.open("POST", "https://ndem.quickappflow.com/api/SaveRecord", true);
+    xhr1.setRequestHeader("Content-Type", "application/json");
+    xhr2.open("POST","https://ndem.quickappflow.com/api/SaveRecord", true);
+    xhr2.setRequestHeader("Content-Type" , "application/json");
+
+    xhr1.onreadystatechange = function () {
+      if (xhr1.readyState === 4 && xhr1.status === 200) {
+        console.log("First API Success:", xhr1.responseText);
+        isFirstAPISuccessful = true;
+        
+        if(isFirstAPISuccessful) {
+          console.log("Second API call happening");
+
+          xhr2.onreadystatechange = function (){
+            if(xhr2.readyState === 4 && xhr2.status === 200){
+              console.log("Second API success",xhr2.responseText);
+              setShowPopup(true);
+              setFormData({
+                firstName: "",
+                lastName: "",
+                email: "",
+                contactNumber: "",
+                gender: "",
+                dob: "",
+                age: "",
+                city: "",
+              });
+            }
+          }
+        }
+
         const submittedFirstName = formData.firstName;
-        setShowPopup(true);
-
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          contactNumber: "",
-          gender: "",
-          dob: "",
-          age: "",
-          city: "",
-        });
-
         localStorage.setItem("submittedFirstName", submittedFirstName);
       }
-
-      
     };
 
-    //  Prepare payload
+    //  Prepare payload for first API
     const payload = JSON.stringify({
       DrMode: false,
       createdByID: 10,
@@ -173,13 +179,37 @@ const RegistrationForm = () => {
         { fieldID: "Gender", fieldValue: formData.gender },
         { fieldID: "City", fieldValue: `${city.id};#${city.name}` },
         { fieldID: "DateofBirth", fieldValue: formData.dob },
-        { fieldId: "Age", fieldValue: formData.age },
+        { fieldID: "Age", fieldValue: formData.age },
       ],
       recordFieldValuesChild: [],
       recordID: "",
+      
     });
+    
+    // prepare payload2 for second API
+    const payload2 = JSON.stringify({
+     DrMode : false,
+     CreatedById : "",
+     lastModifiedBy : "",
+     objectID : "QAF_Users",
+     recordFieldValues :[
+      {fieldID : "UserType" , fieldValue:"Customer_User"},
+      {fieldID : "FirstName" , fieldValue: formData.firstName},
+      {fieldID : "LastName" , fieldValue: formData.lastName},
+      {fieldID : "ContactNumber" , fieldValue: formData.contactNumber},
+      {fieldID : "Email" , fieldValue: formData.email},
+      {fieldID : "Home" , fieldValue : ""},
+      {fieldID : "MobileHomeURL" , fieldValue : ""},
+      {fieldID : "Active" , fieldValue: ""},
+      {fieldID : "SendWelcomeMail" ,fieldValue: true}
+     ],
+     recordFieldValuesChild: [],
+     recordID : "",
+    })
 
-    xhr.send(payload);
+    xhr1.send(payload);
+    xhr2.send(payload2);
+
   };
 
   return (
@@ -224,34 +254,6 @@ const RegistrationForm = () => {
               value={formData.email}
               className={`${styles.input} ${styles.readOnlyInput}`}
               readOnly // Make the field readonly
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Password<span className={styles.asteric}> *</span>
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className={styles.input}
-              placeholder="Enter your password"
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Confirm Password<span className={styles.asteric}> *</span>
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className={styles.input}
-              placeholder="Confirm your password"
             />
           </div>
           <div className={styles.formGroup}>

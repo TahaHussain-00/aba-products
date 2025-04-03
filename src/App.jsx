@@ -10,7 +10,6 @@ import {
 import ValidatePage from "./pages/ValidatePage";
 import ThankYouPage from "./pages/ThankYouPage";
 import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/CustomerHomePage";
 import AppointmentPage from "./pages/AppointmentPage";
 import MyProfilePage from "./pages/MyProfilePage";
 
