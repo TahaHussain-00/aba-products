@@ -15,7 +15,7 @@ function MyProfilePage() {
     const [recordID, setRecordID] = useState("");
     const [originalData, setOriginalData] = useState(null);
     const email = location.state?.email || ""; 
-    console.log("mai phele aaya hu", email)
+   
   
     const toggleMenu = () => {
       setIsOpen((prevIsOpen) => !prevIsOpen);
