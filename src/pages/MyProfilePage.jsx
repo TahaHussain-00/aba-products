@@ -333,7 +333,7 @@ function MyProfilePage() {
           <form className={styles.form}>
             {/* First Name */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>First Name *</label>
+              <label className={styles.label}>First Name <span className={styles.asteric}>*</span></label>
               <input
                 type="text"
                 className={styles.input}
@@ -347,7 +347,7 @@ function MyProfilePage() {
 
             {/* Last Name */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>Last Name *</label>
+              <label className={styles.label}>Last Name <span className={styles.asteric}>*</span></label>
               <input
                 type="text"
                 className={styles.input}
@@ -360,7 +360,7 @@ function MyProfilePage() {
 
             {/* Email */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>Email *</label>
+              <label className={styles.label}>Email <span className={styles.asteric}>*</span></label>
               <input
                 type="email"
                 className={styles.input}
@@ -372,7 +372,7 @@ function MyProfilePage() {
 
             {/* Contact Number */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>Contact Number *</label>
+              <label className={styles.label}>Contact Number <span className={styles.asteric}>*</span></label>
               <input
                 type="tel"
                 className={styles.input}
@@ -401,13 +401,14 @@ function MyProfilePage() {
 
             {/* Date of Birth */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>Date of Birth</label>
+              <label className={styles.label}>Date of Birth <span className={styles.asteric}>*</span></label>
               <input
                 type="date"
                 className={styles.input}
                 name="dob"
                 value={formData.dob}
                 onChange={handleFormChange}
+                required
               />
             </div>
 
@@ -425,15 +426,16 @@ function MyProfilePage() {
 
             {/* City */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>City</label>
+              <label className={styles.label}>City <span className={styles.asteric}>*</span></label>
               <div className={styles.cityInput}>
                 <select
                   name="city"
                   value={formData.city}
                   onChange={handleFormChange}
                   className={styles.input}
+                  required
                 >
-                  <option value="">Select City</option>
+                  <option value="">Select City </option>
                   {cityOptions.map((city) => (
                     <option key={city.id} value={city.name}>
                       {city.name}

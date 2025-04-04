@@ -4,6 +4,10 @@ html, body {
     height: 100%;
     font-family: Arial, sans-serif;
   }
+
+  h2{
+    text-align: center;
+  }
   
   /* -------- Main Layout -------- */
   .container {
@@ -281,6 +285,12 @@ html, body {
   
   .clearIcon:hover {
     color: #000;
+  }
+
+  .asteric{
+
+    color: #ff0000;
+
   }
   
   /* -------- Responsive Design -------- */
